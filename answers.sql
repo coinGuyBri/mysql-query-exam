@@ -57,6 +57,7 @@ SELECT f.departAirport, f.arriveAirport, max(f.miles) miles FROM flight f;
 */
 
 SELECT p.firstName, p.lastName, sum(f.miles) miles FROM passenger p JOIN reservation r ON p.ID = r.passengerID JOIN flight f ON f.ID = r.flightID GROUP BY p.ID ORDER BY miles DESC, p.firstName, p.lastName LIMIT 5;
+
 /*
 11. Provide a list of American airline flights ordered by route and arrival date and time. Your results must look like this:
 */
