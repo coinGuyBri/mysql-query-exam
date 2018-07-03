@@ -44,18 +44,25 @@ SELECT f.flightNumber flight, count(r.ID) reservations FROM reservation r JOIN f
 8. List the average ticket cost for coach by airline and route. Order by AverageCost in descending order.
 */
 
+SELECT a.name airline, f.departAirport, f.arriveAirport, avg(r.cost) AverageCost FROM flight f JOIN airline a ON a.ID = f.airlineID JOIN reservation r ON r.flightID = f.ID WHERE r.class = 'coach' GROUP BY f.flightNumber ORDER BY AverageCost DESC;
+
 /*
 9. Which route is the longest?
 */
 
+SELECT f.departAirport, f.arriveAirport, max(f.miles) miles FROM flight f;
 
 /*
 10. List the top 5 passengers that have flown the most miles. Order by miles.
 */
 
+SELECT p.firstName, p.lastName, sum(f.miles) miles FROM passenger p JOIN reservation r ON p.ID = r.passengerID JOIN flight f ON f.ID = r.flightID GROUP BY p.ID ORDER BY miles DESC LIMIT 5;
+
 /*
 11. Provide a list of American airline flights ordered by route and arrival date and time. Your results must look like this:
 */
+
+SELECT a.name Name, concat_ws(' --> ',f.departAirport, f.arriveAirport) Route, DATE(f.scheduledArriveDateTime) 'Arrive Date', TIME(f.scheduledArriveDateTime) 'Arrive Time' FROM flight f JOIN airline a ON a.ID = f.airlineID WHERE a.name = 'American' ORDER BY Route, 'Arrival Date', 'Arrival Time';
 
 /*
 12. Provide a report that counts the number of reservations and totals the reservation costs (as Revenue) by Airline, flight, and route. Order the report by total revenue in descending order.
